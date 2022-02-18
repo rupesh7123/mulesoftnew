@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="a12b478b-db37-4910-8c28-561ddb115d9a" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<file:config name="File_Config" doc:name="File Config" doc:id="4407e0cc-0ec7-4075-99d3-a7cb11c63a97" />
+	<flow name="filedeleteFlow" doc:id="f91778ed-2851-4525-9cae-68ab18f889b4" >
+		<http:listener doc:name="Listener" doc:id="2843e923-12c1-4650-b5c7-1c6044123dbd" config-ref="HTTP_Listener_config" path="filedel"/>
+		<file:delete doc:name="Delete" doc:id="5ad14553-5e59-4144-b6d6-25c47f7dad50" config-ref="File_Config" path="C:\Users\19802\Desktop\New folder"/>
+	</flow>
+</mule>
