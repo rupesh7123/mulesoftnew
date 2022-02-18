@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="49fd5440-8419-4cba-bb23-347026d434ed" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<flow name="Main-asyncFlow" doc:id="93d874f1-ad9d-438d-84c6-6c878b8821a5" >
+		<http:listener doc:name="Listener" doc:id="95f58cfb-eb05-432d-bf31-a1658933a6d8" config-ref="HTTP_Listener_config" path="flowasync"/>
+		<logger level="INFO" doc:name="Logger" doc:id="a64fe4cc-4a09-448f-a592-03131f3ccf83" message="flow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="fb4011af-7d6a-49d4-b6da-fe82f3f1d539" message="started mainflow"/>
+		<async doc:name="Async" doc:id="31143dd1-a35b-4d42-babc-93ab2e7e27a4" >
+			<logger level="INFO" doc:name="Logger" doc:id="bd24d78d-2897-43fb-8af9-51141003b1bc" message="one async"/>
+			<logger level="INFO" doc:name="Logger" doc:id="ca7e4de7-ee59-4513-905d-1d43024632bb" message="second async"/>
+			<logger level="INFO" doc:name="Logger" doc:id="78381cf9-b247-404d-87c4-a37b095c2381" message="third async"/>
+		</async>
+		<logger level="INFO" doc:name="Logger" doc:id="12a1fa51-daaf-4164-bd01-20afc9d0fba5" message="main flow one"/>
+		<logger level="INFO" doc:name="Logger" doc:id="a6ffa46c-a819-4c86-9a3b-5e4e61a28953" message="main flow two"/>
+		<logger level="INFO" doc:name="Logger" doc:id="d14aeebb-164e-4e39-b48c-4ca83b03c443" message="main flow three"/>
+		<flow-ref doc:name="Flow Reference" doc:id="cf09adc3-1b30-4ff0-88d8-076076910b69" name="private-asyncFlow"/>
+		<flow-ref doc:name="Flow Reference" doc:id="1f7020c0-8a59-4213-ba87-32503a82dabc" name="Sub_Flow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="ab7c3b4f-4476-40a9-b1ff-de721f1378b9" message="Async end"/>
+	</flow>
+	<flow name="private-asyncFlow" doc:id="001bbfb6-3f63-448c-8c9d-c69ff8d2b7a4" >
+		<logger level="INFO" doc:name="Logger" doc:id="924a0f23-77d3-4dac-b5ca-84318a36a3c5" message="Hey this is private flow for async"/>
+	</flow>
+	<sub-flow name="Sub_Flow" doc:id="9cbabb57-1638-4a77-8905-dae122230ff3" >
+		<logger level="INFO" doc:name="Logger" doc:id="daf5f7ac-1b43-49f2-828e-88419592920d" message="Hey this is subflow for async"/>
+	</sub-flow>
+</mule>
