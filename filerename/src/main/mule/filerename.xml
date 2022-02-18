@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="71d12b0e-9d4d-4e7a-807c-10d579668f9c" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<file:config name="File_Config" doc:name="File Config" doc:id="e797a5fb-5c00-4ac8-9bac-57622f78bbe1" />
+	<flow name="filerenameFlow" doc:id="43b4be38-9ede-4111-8769-fd2b545d0cb9" >
+		<http:listener doc:name="Listener" doc:id="58d8f0f9-a636-4867-b739-0a29398e131b" path="filerename" config-ref="HTTP_Listener_config"/>
+		<file:rename doc:name="Rename" doc:id="9545fca2-65ab-47e5-a25f-1561ffcd18f0" config-ref="File_Config" path="C:\Users\19802\Desktop\target" to="renamefile"/>
+	</flow>
+</mule>
