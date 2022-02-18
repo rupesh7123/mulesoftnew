@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="8edae421-3f97-45d3-8b36-9cc2599152ba" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<file:config name="File_Config" doc:name="File Config" doc:id="9badc443-161c-4117-b303-84d64d5086a4" />
+	<flow name="fileftpFlow" doc:id="26902ae1-417f-4782-8dc8-53ff8be0eaf6" initialState="stopped">
+		<http:listener doc:name="Listener" doc:id="98c9e1af-bdc1-44f9-bb61-14149cb78592" config-ref="HTTP_Listener_config" path="file"/>
+		<logger level="INFO" doc:name="Logger" doc:id="bec93de3-9046-49ec-9da8-f27bc43e8b68" message="#[payload]"/>
+		<file:read doc:name="Read" doc:id="a07ba116-4a22-4973-a06b-21c800c9288d" config-ref="File_Config" path="C:\Users\19802\Desktop\Source\readnote.txt"/>
+		<file:write doc:name="Write" doc:id="848fe70c-9929-4453-ba7d-3e11b5200abd" config-ref="File_Config" path="C:\Users\19802\Desktop\Source\writenote.txt">
+			<file:content ><![CDATA[Hey this i am creating new file with write operation ]]></file:content>
+		</file:write>
+		<logger level="INFO" doc:name="Logger" doc:id="df1ed0c8-7f90-4b76-9c23-4567cf74daa5" message="#[payload]"/>
+	</flow>
+	<flow name="fileftpFlow1" doc:id="46478998-36f2-4647-806e-4de8d7824b4b" >
+		<file:listener doc:name="On New or Updated File" doc:id="9f5a97ec-3a44-4b94-bd16-5b50877771bb" config-ref="File_Config" directory="C:\Users\19802\Desktop\Source" autoDelete="true" moveToDirectory="C:\Users\19802\Desktop\target" renameTo="Sample">
+			<scheduling-strategy >
+				<fixed-frequency frequency="1" timeUnit="MINUTES" />
+			</scheduling-strategy>
+		</file:listener>
+		<logger level="INFO" doc:name="Logger" doc:id="1b3c6886-591e-45ea-a38c-8b55bab55947" message="#[payload]"/>
+	</flow>
+</mule>
