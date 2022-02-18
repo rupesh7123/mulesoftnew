@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="9bb7b85c-2749-44e6-a9fd-1cde7e808291" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<flow name="Main-debugFlow" doc:id="757f843a-73d9-4a81-bc84-26f7a448e6f3" >
+		<http:listener doc:name="Listener" doc:id="f93232d8-69a9-4a66-96cf-451da469383e" config-ref="HTTP_Listener_config" path="flowdebug"/>
+		<set-payload value="main flow stated for debug" doc:name="Set Payload" doc:id="6be5617d-763e-4dfe-a084-48983e4c7ace" />
+		<logger level="INFO" doc:name="Logger" doc:id="c91962cf-7678-4928-9d59-2c76c7e131df" message="Hey this is mainflow"/>
+		<flow-ref doc:name="Flow Reference" doc:id="1409ea19-0ac7-453c-b298-d53c29e005d3" name="Private-Flow"/>
+		<flow-ref doc:name="Flow Reference" doc:id="c4ffd53f-cacb-43d8-95ae-56da4becf7ab" name="Sub-Flow"/>
+	</flow>
+	<flow name="Private-Flow" doc:id="b9129cf6-ffb9-4f3e-9588-eaf86bad63ab" >
+		<logger level="INFO" doc:name="Logger" doc:id="54aa1305-de08-4717-b614-09cdf43e49e5" message="Hey this is Privateflow"/>
+	</flow>
+	<sub-flow name="Sub-Flow" doc:id="4fb76dff-8ef5-4415-8255-eb8de1010fc8" >
+		<logger level="INFO" doc:name="Logger" doc:id="05845462-0c6b-4957-abc9-68904cd5de70" message="Hey this is subflow"/>
+	</sub-flow>
+</mule>
